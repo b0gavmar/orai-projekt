@@ -5,14 +5,16 @@
             "date": "2025-03-05",
             "hour": 8,
             "name": "Pista",
-            "mobile": "06201234567"
+            "mobile": "06201234567",
+            "reserved": true 
         },
         {
             "id": 2,
             "date": "2025-03-05",
             "hour": 9,
             "name": "Béla",
-            "mobile": "06201234568"
+            "mobile": "06201234568",
+            "reserved": true
         }
     ]
 }

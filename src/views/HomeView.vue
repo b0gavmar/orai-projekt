@@ -1,12 +1,19 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 import {useIdopontStore} from '@/stores/idopont.js'
+import {useRouter} from 'vue-router'
 
 const idopontStore = useIdopontStore()
+const router = useRouter();
 
 const idopontok = ref({})
 const getIdopontok = async()=>{
   await idopontStore.fetchIdopontok();
+
+}
+
+const foglalas =()=>{
+  router.push("/idopontfoglalas/3")
 }
 
 onMounted(async () => {
@@ -23,6 +30,7 @@ onMounted(async () => {
           <p>{{ idopont.hour }}</p>
         </div>
       </div>
+      <button class="btn btn-success" @click="foglalas">Időpont foglalás</button>
     </div>
   </main>
 </template>

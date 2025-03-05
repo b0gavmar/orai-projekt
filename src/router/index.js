@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/idopontfoglalas/:idopont',
+      path: '/idopontfoglalas/:idopontid',
       name: 'idopont foglalas',
       component: () => import('../views/IdopontFoglalasView.vue'),
     },
