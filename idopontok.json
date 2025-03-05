@@ -2,7 +2,7 @@
     "idopontok":[
         {
             "id":1,
-            "day": "hetfo",
+            "day": "Hétfo",
             "hour": 8,
             "name": "Pista",
             "mobile": "06201234567",
@@ -10,7 +10,7 @@
         },
         {
             "id": 2,
-            "day": "hetfo",
+            "day": "Hétfő",
             "hour": 9,
             "name": "Béla",
             "mobile": "06201234568",

@@ -17,7 +17,7 @@ onMounted(async () => {
     <h1>Időpont foglalás</h1>
     <div class="card bg-dark p-4 text-light">
       <div class="form-group">
-        <h3>Időpont: </h3>
+        <h3>Időpont: {{ idop }}</h3>
       </div>
       <hr>
       <div class="form-group">

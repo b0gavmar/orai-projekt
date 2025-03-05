@@ -18,6 +18,16 @@ export const useIdopontStore = defineStore('idopont', () => {
     }
   }
 
+  const getIdopont = async() => {
+    try {
+      await fetchIdopontok()
+      idopontok.get()
+    }
+    catch {
+      toast.error("Nem lehetett lekérni az időpontokat")
+    }
+  }
+
   const pushIdopont = async () => {
     try {
       await axios.push("http://localhost:3000/idopontok")

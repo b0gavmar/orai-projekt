@@ -27,7 +27,7 @@ onMounted(async () => {
       <div v-for="idopont in idopontStore.idopontok" class="card bg-dark text-light m-2 p-1">
         <div class="card-text">
           <p> {{ idopont.day }} </p>
-          <p>{{ idopont.hour }}</p>
+          <p>{{ idopont.hour }} óra</p>
         </div>
       </div>
       <button class="btn btn-success" @click="foglalas">Időpont foglalás</button>
