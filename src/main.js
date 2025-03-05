@@ -4,7 +4,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Toast } from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
+
+import Toast from 'vue-toastification'
 
 const app = createApp(App)
 
@@ -16,4 +18,5 @@ app.use(Toast, {
     closeOnClick: true,
     pauseOnHover: true,
 })
-app.mount('#app')
+app.mount
+('#app')

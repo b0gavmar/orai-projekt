@@ -7,8 +7,8 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Időpontok</RouterLink>
+        <RouterLink to="/idopontfoglalas">Időpont foglalása</RouterLink>
       </nav>
 
   </header>
