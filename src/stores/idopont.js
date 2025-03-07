@@ -6,7 +6,8 @@ import { useToast } from 'vue-toastification';
 const toast = useToast();
 
 export const useIdopontStore = defineStore('idopont', () => {
-  const idopontok = ref({});
+  const idopontok = ref([]);
+  const foglalniKivantIdopont = ref({})
 
   const fetchIdopontok = async () => {
     try {
@@ -39,5 +40,5 @@ export const useIdopontStore = defineStore('idopont', () => {
     }
   }
 
-  return { idopontok, fetchIdopontok, getIdopont, pushIdopont }
+  return { idopontok, foglalniKivantIdopont, fetchIdopontok, getIdopont, pushIdopont }
 })

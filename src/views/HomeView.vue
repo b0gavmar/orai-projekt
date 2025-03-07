@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 
 const idopontStore = useIdopontStore();
 const router = useRouter();
+const newId = ref(0);
 
 const newIdopont = ref({
   id: 0,
@@ -16,18 +17,20 @@ const newIdopont = ref({
 });
 
 const getNewId = () => {
-  const newId = ref(0);
   do {
-    newId.value += 1;
-    if (idopontStore.idopontok.find((i) => i.id == newId)) {
+    if (idopontStore.idopontok.find((i) => i.id == newId.value)) {
+      newId.value = +1;
     } else {
-      newIdopont.value.id = newId;
+      newIdopont.value.id = newId.value;
     }
+    console.log(newId.value)
   } while (newIdopont.value.id == 0);
+  return newId.value;
 };
 
-const foglalas = (id) => {
-  router.push(`/idopontfoglalas/${id}`);
+const foglalas = async () => {
+  idopontStore.foglalniKivantIdopont.value = newIdopont.value;
+  await router.push(`/idopontfoglalas/${newIdopont.id}`);
 };
 
 const days = ref(["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"]);
@@ -38,8 +41,9 @@ onMounted(async () => {
   await idopontStore.fetchIdopontok();
   days.value.forEach((nap) => {
     hours.value.forEach((ora) => {
+      console.log(getNewId());
       idopontok.value.push({
-        id: getNewId(),
+        id: 4,
         day: nap,
         hour: ora,
         name: "",
@@ -57,18 +61,21 @@ onMounted(async () => {
       <div class="card bg-dark text-light p-3 mt-2">
         <h1>Válasszon időpontot!</h1>
         <div class="mb-3">
-          <select class="form-select">
-            <option v-for="idopont in idopontok">{{ idopont.day }}, {{ idopont.hour }} óra</option>
+          <select v-model="newIdopont" class="form-select">
+            <option
+              v-for="(idopont, index) in idopontok"
+              :key="index"
+              :value="idopont"
+            >
+              {{ idopont.day }}, {{ idopont.hour }} óra {{ idopont.id }}
+            </option>
           </select>
         </div>
+        {{ newIdopont.day }} {{ newIdopont.hour }} {{ newIdopont.id }}
+        <button class="btn btn-success" @click="foglalas">
+          Időpont foglalás
+        </button>
       </div>
-      <!--<div v-for="idopont in idopontStore.idopontok" class="card bg-dark text-light m-2 p-1">
-        <div class="card-text">
-          <p> {{ idopont.day }} </p>
-          <p>{{ idopont.hour }} óra</p>
-        </div>
-      </div>
-      <button class="btn btn-success" @click="foglalas(id)">Időpont foglalás</button>-->
     </div>
   </main>
 </template>
