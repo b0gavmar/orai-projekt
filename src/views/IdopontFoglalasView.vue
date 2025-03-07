@@ -1,37 +1,75 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useIdopontStore } from '@/stores/idopont.js'
-import {useRoute} from 'vue-router'
+import { ref, onMounted } from "vue";
+import { useIdopontStore } from "@/stores/idopont.js";
+import { useRoute } from "vue-router";
+import { useToast } from "vue-toastification";
 
 const idopontStore = useIdopontStore()
 const route = useRoute()
+const toast = useToast()
+
+const currentIdopont = ref({
+  id: "0",
+  day: "",
+  hour: 0,
+  name: "",
+  mobile: "",
+  reserved: false,
+})
+
+const reserve = async() =>{
+  if(currentIdopont.name.trim === '' || currentIdopont.mobile.trim === ''){
+    toast.error("Töltsön ki minden mezőt!")
+  }
+  await idopontStore.pushIdopont(currentIdopont)
+}
 
 onMounted(async () => {
   await idopontStore.fetchIdopontok();
-})
+  const foundIdopont = await idopontStore.getIdopont(route.params.idopontid);
+  currentIdopont.value = { ...foundIdopont };
+});
 </script>
 
 <template>
-
   <div class="container">
-    <h1>Időpont foglalás</h1>
     <div class="card bg-dark p-4 text-light">
       <div class="form-group">
-        <h3>Időpont: {{ idop }}</h3>
+        <h3>
+          Időpont: {{ currentIdopont.day }}, {{ currentIdopont.hour }} óra
+        </h3>
       </div>
-      <hr>
-      <div class="form-group">
-        <label for="nev">Foglaló neve:</label>
-        <input type="text" class="form-control" id="nev" name="nev" placeholder="Adja meg a nevét">
+      <hr />
+      <div v-if="currentIdopont.reserved === false">
+        <div class="form-group">
+          <label for="nev">Foglaló neve:</label>
+          <input
+            v-model="currentIdopont.name"
+            type="text"
+            class="form-control"
+            id="nev"
+            name="nev"
+            placeholder="Adja meg a nevét"
+          />
+        </div>
+        <div class="form-group">
+          <label for="telsz">Foglaló Telefonszáma:</label>
+          <input
+            v-model="currentIdopont.mobile"
+            type="text"
+            class="form-control"
+            id="telsz"
+            name="telsz"
+            placeholder="Adja meg az email címét"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mt-4" @click="reserve">Foglalás</button>
       </div>
-      <div class="form-group">
-        <label for="email">Foglaló Email címe:</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Adja meg az email címét">
+      <div v-else>
+        <h2>Az időpont már le van foglalva!</h2>
       </div>
-      <button type="submit" class="btn btn-primary mt-4">Foglalás</button>
     </div>
   </div>
-
 </template>
 
 <style></style>

@@ -18,17 +18,18 @@ export const useIdopontStore = defineStore('idopont', () => {
     }
   }
 
-  const getIdopont = async() => {
+  const getIdopont = async(id) => {
     try {
       await fetchIdopontok()
-      idopontok.get()
+      const response = await axios.get(`http://localhost:3000/idopontok/${id}`)
+      return response.data
     }
     catch {
       toast.error("Nem lehetett lekérni az időpontokat")
     }
   }
 
-  const pushIdopont = async () => {
+  const pushIdopont = async (idopont) => {
     try {
       await axios.push("http://localhost:3000/idopontok")
       toast.success("Sikeres foglalás")
@@ -38,5 +39,5 @@ export const useIdopontStore = defineStore('idopont', () => {
     }
   }
 
-  return { idopontok, fetchIdopontok }
+  return { idopontok, fetchIdopontok, getIdopont, pushIdopont }
 })
