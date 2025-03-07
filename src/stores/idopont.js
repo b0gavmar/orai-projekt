@@ -40,5 +40,9 @@ export const useIdopontStore = defineStore('idopont', () => {
     }
   }
 
-  return { idopontok, foglalniKivantIdopont, fetchIdopontok, getIdopont, pushIdopont }
+  const setFoglalniKivantIdopont = (idopont) =>{
+    foglalniKivantIdopont.value = idopont.value
+  }
+
+  return { idopontok, foglalniKivantIdopont, setFoglalniKivantIdopont, fetchIdopontok, getIdopont, pushIdopont }
 })

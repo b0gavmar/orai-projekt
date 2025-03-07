@@ -29,13 +29,14 @@ const getNewId = () => {
 };
 
 const foglalas = async () => {
-  idopontStore.foglalniKivantIdopont.value = newIdopont.value;
-  await router.push(`/idopontfoglalas/${newIdopont.id}`);
+  idopontStore.setFoglalniKivantIdopont(newIdopont.value)
+  console.log(idopontStore.foglalniKivantIdopont.value)
+  await router.push(`/idopontfoglalas/${newIdopont.id}`)
 };
 
-const days = ref(["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"]);
-const hours = ref([8, 9, 10, 11, 12, 13, 14, 15, 16]);
-const idopontok = ref([]);
+const days = ref(["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"])
+const hours = ref([8, 9, 10, 11, 12, 13, 14, 15, 16])
+const idopontok = ref([])
 
 onMounted(async () => {
   await idopontStore.fetchIdopontok();
