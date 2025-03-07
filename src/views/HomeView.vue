@@ -17,7 +17,7 @@ const newIdopont = ref({
 });
 
 const getNewId = () => {
-  do {
+  /*do {
     if (idopontStore.idopontok.find((i) => i.id == newId.value)) {
       newId.value = +1;
     } else {
@@ -25,7 +25,7 @@ const getNewId = () => {
     }
     console.log(newId.value)
   } while (newIdopont.value.id == 0);
-  return newId.value;
+  return newId.value;*/
 };
 
 const foglalas = async () => {
@@ -43,7 +43,7 @@ onMounted(async () => {
     hours.value.forEach((ora) => {
       console.log(getNewId());
       idopontok.value.push({
-        id: 4,
+        id: newId,
         day: nap,
         hour: ora,
         name: "",
