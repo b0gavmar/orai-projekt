@@ -1,20 +1,36 @@
 {
-    "idopontok":[
-        {
-            "id":1,
-            "day": "Hétfo",
-            "hour": 8,
-            "name": "Pista",
-            "mobile": "06201234567",
-            "reserved": true 
-        },
-        {
-            "id": 2,
-            "day": "Hétfő",
-            "hour": 9,
-            "name": "Béla",
-            "mobile": "06201234568",
-            "reserved": true
-        }
-    ]
+  "idopontok": [
+    {
+      "id": "108",
+      "day": "Hétfo",
+      "hour": 8,
+      "name": "Pista",
+      "mobile": "06201234567",
+      "reserved": true
+    },
+    {
+      "id": "109",
+      "day": "Hétfő",
+      "hour": 9,
+      "name": "Béla",
+      "mobile": "06201234568",
+      "reserved": true
+    },
+    {
+      "id": 112,
+      "day": "Hétfő",
+      "hour": 12,
+      "name": "rew",
+      "mobile": "dsa",
+      "reserved": true
+    },
+    {
+      "id": 210,
+      "day": "Kedd",
+      "hour": 10,
+      "name": "dsadad",
+      "mobile": "adsadadad",
+      "reserved": true
+    }
+  ]
 }
