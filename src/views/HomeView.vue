@@ -16,41 +16,49 @@ const newIdopont = ref({
   reserved: false,
 });
 
-const getNewId = () => {
-  /*do {
-    if (idopontStore.idopontok.find((i) => i.id == newId.value)) {
-      newId.value = +1;
-    } else {
-      newIdopont.value.id = newId.value;
-    }
-    console.log(newId.value)
-  } while (newIdopont.value.id == 0);
-  return newId.value;*/
+const getNapszam = (nap) => {
+  if (nap == "Hétfő") {
+    return 100;
+  } else if (nap == "Kedd") {
+    return 200;
+  } else if (nap == "Szerda") {
+    return 300;
+  } else if (nap == "Csütörtök") {
+    return 400;
+  } else {
+    return 500;
+  }
 };
 
 const foglalas = async () => {
-  idopontStore.setFoglalniKivantIdopont(newIdopont.value)
-  console.log(idopontStore.foglalniKivantIdopont.value)
-  await router.push(`/idopontfoglalas/${newIdopont.id}`)
+  await idopontStore.setFoglalniKivantIdopont(newIdopont.value);
+  await router.push(`/idopontfoglalas/${newIdopont.value.id}`);
 };
 
-const days = ref(["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"])
-const hours = ref([8, 9, 10, 11, 12, 13, 14, 15, 16])
-const idopontok = ref([])
+const days = ref(["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"]);
+const hours = ref([8, 9, 10, 11, 12, 13, 14, 15, 16]);
+const idopontok = ref([]);
 
 onMounted(async () => {
   await idopontStore.fetchIdopontok();
   days.value.forEach((nap) => {
     hours.value.forEach((ora) => {
-      console.log(getNewId());
-      idopontok.value.push({
-        id: newId,
+      const idopont = {
+        id: getNapszam(nap) + ora,
         day: nap,
         hour: ora,
         name: "",
         mobile: "",
         reserved: false,
-      });
+      };
+
+      const isReserved = idopontStore.idopontok.some(
+        (existingIdopont) => existingIdopont.id == idopont.id
+      );
+
+      if (!isReserved) {
+        idopontok.value.push(idopont);
+      }
     });
   });
 });
@@ -58,9 +66,9 @@ onMounted(async () => {
 
 <template>
   <main>
-    <div class="container d-flex flex-wrap justify-content-center">
+    <div class="container d-flex justify-content-center">
       <div class="card bg-dark text-light p-3 mt-2">
-        <h1>Válasszon időpontot!</h1>
+        <h2>Válasszon időpontot!</h2>
         <div class="mb-3">
           <select v-model="newIdopont" class="form-select">
             <option
@@ -68,12 +76,11 @@ onMounted(async () => {
               :key="index"
               :value="idopont"
             >
-              {{ idopont.day }}, {{ idopont.hour }} óra {{ idopont.id }}
+              {{ idopont.day }}, {{ idopont.hour }} óra
             </option>
           </select>
         </div>
-        {{ newIdopont.day }} {{ newIdopont.hour }} {{ newIdopont.id }}
-        <button class="btn btn-success" @click="foglalas">
+        <button class="btn btn-primary" @click="foglalas">
           Időpont foglalás
         </button>
       </div>
