@@ -25,7 +25,7 @@ const reserve = async () => {
   else{
     currentIdopont.value.reserved = true;
     await idopontStore.postIdopont(currentIdopont.value);
-    router.push("/")
+    await router.push("/")
   }
 };
 
