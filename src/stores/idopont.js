@@ -53,7 +53,9 @@ export const useIdopontStore = defineStore("idopont", () => {
     try {
       for (const idopont of idopontok.value) {
         if (!idopont.reserved) {
-          await axios.delete(`http://localhost:3000/idopontok/${idopont.id}`);
+          try {
+            await axios.delete(`http://localhost:3000/idopontok/${idopont.id}`);
+          } catch {}
         }
       }
       fetchIdopontok();
