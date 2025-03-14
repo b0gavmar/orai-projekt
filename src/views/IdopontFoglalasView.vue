@@ -24,15 +24,17 @@ const reserve = async () => {
   }
   else{
     currentIdopont.value.reserved = true;
-    await idopontStore.postIdopont(currentIdopont.value);
+    await idopontStore.putIdopont(currentIdopont.value);
     await router.push("/")
   }
 };
 
 onMounted(async () => {
-  currentIdopont.value = await idopontStore.foglalniKivantIdopont;
+  await idopontStore.fetchIdopontok()
+  currentIdopont.value = await idopontStore.getIdopont(route.params.idopontid);
   currentIdopont.name = "";
   currentIdopont.mobile = "";
+  console.log(route.params.idopontid);
 });
 </script>
 

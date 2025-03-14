@@ -31,7 +31,8 @@ const getNapszam = (nap) => {
 };
 
 const foglalas = async () => {
-  await idopontStore.setFoglalniKivantIdopont(newIdopont.value);
+  //await idopontStore.setFoglalniKivantIdopont(newIdopont.value);
+  await idopontStore.postIdopont(newIdopont.value);
   await router.push(`/idopontfoglalas/${newIdopont.value.id}`);
 };
 
@@ -40,27 +41,30 @@ const hours = ref([8, 9, 10, 11, 12, 13, 14, 15, 16]);
 const idopontok = ref([]);
 
 onMounted(async () => {
-  await idopontStore.fetchIdopontok();
-  days.value.forEach((nap) => {
-    hours.value.forEach((ora) => {
-      const idopont = {
-        id: getNapszam(nap) + ora,
-        day: nap,
-        hour: ora,
-        name: "",
-        mobile: "",
-        reserved: false,
-      };
+  try {
+    await idopontStore.fetchIdopontok();
+    await idopontStore.removeUnreserved();
+    days.value.forEach((nap) => {
+      hours.value.forEach((ora) => {
+        const idopont = {
+          id: (getNapszam(nap) + ora).toString(),
+          day: nap,
+          hour: ora,
+          name: "",
+          mobile: "",
+          reserved: false,
+        };
 
-      const isReserved = idopontStore.idopontok.some(
-        (existingIdopont) => existingIdopont.id == idopont.id
-      );
+        const isReserved = idopontStore.idopontok.some(
+          (existingIdopont) => existingIdopont.id == idopont.id
+        );
 
-      if (!isReserved) {
-        idopontok.value.push(idopont);
-      }
+        if (!isReserved) {
+          idopontok.value.push(idopont);
+        }
+      });
     });
-  });
+  } catch {}
 });
 </script>
 

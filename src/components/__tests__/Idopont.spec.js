@@ -4,14 +4,33 @@ import { mount } from "@vue/test-utils";
 import Foglalas from "../../views/IdopontFoglalasView.vue";
 import { useIdopontStore } from "@/stores/idopont";
 import { createPinia, setActivePinia } from "pinia";
+import { createRouter, createMemoryHistory } from "vue-router";
+
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes: [{ path: "/foglalas/:idopontid", component: Foglalas }],
+});
 
 describe("IdopontFoglalas", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     setActivePinia(createPinia());
+    router.push("/foglalas/2008");
+    await router.isReady();
   });
 
-  it("Tartalom ellenőrzés", () => {
-    const wrapper = mount(Foglalas);
+  it("Időpont generálás ellenőrzés", () => {
+    const wrapper = mount(Foglalas, {
+      global: {
+        plugins: [router],
+        mocks: {
+          $route: {
+            params: {
+              idopontid: "2008",
+            },
+          },
+        },
+      },
+    });
     expect(wrapper.text()).toContain("Foglaló neve:");
   });
 
@@ -19,32 +38,37 @@ describe("IdopontFoglalas", () => {
     const idopontStore = useIdopontStore();
 
     idopontStore.idopontok = [
-      { id: 2008, day: "Kedd", hour: 8, reserved: false },
-      { id: 2009, day: "Kedd", hour: 9, reserved: true },
-      { id: 2010, day: "Kedd", hour: 10, reserved: false },
+      { id: "2008", day: "Kedd", hour: 8, reserved: false },
+      { id: "2009", day: "Kedd", hour: 9, reserved: true },
+      { id: "2010", day: "Kedd", hour: 10, reserved: false },
     ];
 
-    const wrapper = mount(Foglalas);
+    const wrapper = mount(Foglalas, {
+      global: {
+        plugins: [router],
+        mocks: {
+          $route: {
+            params: {
+              idopontid: "2008",
+            },
+          },
+        },
+      },
+    });
 
     await wrapper.vm.$nextTick();
 
     const options = wrapper.findAll("option");
 
-    const containsReserved = () => {
-      options.forEach((opt) => {
-        if (opt.id == 2009) {
-          return true;
-        }
-      });
-      return false;
-    };
-
-    expect(containsReserved()).toBe(false);
+    const containsReserved = options.some(
+      (opt) => opt.element.value === "2009"
+    );
+    expect(containsReserved).toBe(false);
   });
 
-  it("Foglalás kezdése", () => {
+  it("Foglalás törlése", async () => {
     const idopontStore = useIdopontStore();
-    idopontStore.setFoglalniKivantIdopont({
+    await idopontStore.postIdopont({
       id: 1111,
       day: "Kedd",
       hour: 14,
@@ -52,7 +76,24 @@ describe("IdopontFoglalas", () => {
       mobile: "",
       reserved: false,
     });
-    expect(idopontStore.foglalniKivantIdopont).toStrictEqual({
+
+    const wrapper = mount(Foglalas, {
+      global: {
+        plugins: [router],
+        mocks: {
+          $route: {
+            params: {
+              idopontid: "2008",
+            },
+          },
+        },
+      },
+    });
+
+    await wrapper.vm.$nextTick();
+    await idopontStore.removeUnreserved();
+
+    expect(idopontStore.idopontok).not.toContain({
       id: 1111,
       day: "Kedd",
       hour: 14,

@@ -17,44 +17,28 @@
       "reserved": true
     },
     {
-      "id": 112,
-      "day": "Hétfő",
-      "hour": 12,
-      "name": "rew",
-      "mobile": "dsa",
-      "reserved": true
-    },
-    {
-      "id": 210,
-      "day": "Kedd",
-      "hour": 10,
-      "name": "dsadad",
-      "mobile": "adsadadad",
-      "reserved": true
-    },
-    {
-      "id": 110,
-      "day": "Hétfő",
-      "hour": 10,
-      "name": "jeno",
-      "mobile": "3243254665",
-      "reserved": true
-    },
-    {
-      "id": 214,
+      "id": 1111,
       "day": "Kedd",
       "hour": 14,
-      "name": "ffffff",
-      "mobile": "ffffff",
-      "reserved": true
+      "name": "",
+      "mobile": "",
+      "reserved": false
     },
     {
-      "id": 213,
+      "id": 1111,
       "day": "Kedd",
-      "hour": 13,
-      "name": "fsd",
-      "mobile": "fdsf",
-      "reserved": true
+      "hour": 14,
+      "name": "",
+      "mobile": "",
+      "reserved": false
+    },
+    {
+      "id": 1111,
+      "day": "Kedd",
+      "hour": 14,
+      "name": "",
+      "mobile": "",
+      "reserved": false
     }
   ]
 }

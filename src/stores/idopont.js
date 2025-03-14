@@ -7,7 +7,7 @@ const toast = useToast();
 
 export const useIdopontStore = defineStore("idopont", () => {
   const idopontok = ref([]);
-  const foglalniKivantIdopont = ref({});
+  //const foglalniKivantIdopont = ref({});
 
   const fetchIdopontok = async () => {
     try {
@@ -31,22 +31,50 @@ export const useIdopontStore = defineStore("idopont", () => {
   const postIdopont = async (idopont) => {
     try {
       await axios.post("http://localhost:3000/idopontok", idopont);
+    } catch {
+      toast.error("Nem sikerült leadni a foglalást");
+    }
+  };
+
+  const putIdopont = async (idopont) => {
+    try {
+      fetchIdopontok();
+      await axios.post(
+        `http://localhost:3000/idopontok/${idopont.id}`,
+        idopont
+      );
       toast.success("Sikeres foglalás");
     } catch {
       toast.error("Nem sikerült leadni a foglalást");
     }
   };
 
-  const setFoglalniKivantIdopont = (idopont) => {
-    foglalniKivantIdopont.value = idopont;
+  const removeUnreserved = async () => {
+    try {
+      for (const idopont of idopontok.value) {
+        if (!idopont.reserved) {
+          await axios.delete(`http://localhost:3000/idopontok/${idopont.id}`);
+        }
+      }
+      fetchIdopontok();
+      console.log("Nem foglalt időpontok törölve.");
+    } catch (error) {
+      console.log("Nem sikerült törölni az időpontokat");
+    }
   };
+
+  /*const setFoglalniKivantIdopont = (idopont) => {
+    foglalniKivantIdopont.value = idopont;
+  };*/
 
   return {
     idopontok,
-    foglalniKivantIdopont,
-    setFoglalniKivantIdopont,
+    /*foglalniKivantIdopont,
+    setFoglalniKivantIdopont,*/
     fetchIdopontok,
     getIdopont,
     postIdopont,
+    putIdopont,
+    removeUnreserved,
   };
 });
