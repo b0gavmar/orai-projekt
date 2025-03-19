@@ -15,22 +15,6 @@
       "name": "Béla",
       "mobile": "06201234568",
       "reserved": true
-    },
-    {
-      "id": "111",
-      "day": "Hétfő",
-      "hour": 11,
-      "name": "423423",
-      "mobile": "423432",
-      "reserved": true
-    },
-    {
-      "id": "110",
-      "day": "Hétfő",
-      "hour": 10,
-      "name": "fdsf",
-      "mobile": "fdsf",
-      "reserved": true
     }
   ]
 }

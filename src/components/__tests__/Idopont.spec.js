@@ -56,8 +56,6 @@ describe("IdopontFoglalas", () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
-
     const options = wrapper.findAll("option");
 
     const containsReserved = options.some(

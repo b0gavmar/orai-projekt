@@ -2,6 +2,9 @@
 import { onMounted, ref } from "vue";
 import { useIdopontStore } from "@/stores/idopont.js";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const idopontStore = useIdopontStore();
 const router = useRouter();
@@ -32,8 +35,13 @@ const getNapszam = (nap) => {
 
 const foglalas = async () => {
   //await idopontStore.setFoglalniKivantIdopont(newIdopont.value);
-  await idopontStore.postIdopont(newIdopont.value);
-  await router.push(`/idopontfoglalas/${newIdopont.value.id}`);
+  if(newIdopont.value.id != 0){
+    await idopontStore.postIdopont(newIdopont.value);
+    await router.push(`/idopontfoglalas/${newIdopont.value.id}`);
+  }
+  else{
+    toast.error("Válasszon időpontot!")
+  }
 };
 
 const days = ref(["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek"]);
