@@ -69,7 +69,7 @@ describe("IdopontFoglalas", () => {
   it("Foglalás törlése", async () => {
     const idopontStore = useIdopontStore();
     await idopontStore.postIdopont({
-      id: 1111,
+      id: "1111",
       day: "Kedd",
       hour: 14,
       name: "",
@@ -77,24 +77,10 @@ describe("IdopontFoglalas", () => {
       reserved: false,
     });
 
-    const wrapper = mount(Foglalas, {
-      global: {
-        plugins: [router],
-        mocks: {
-          $route: {
-            params: {
-              idopontid: "2008",
-            },
-          },
-        },
-      },
-    });
-
-    await wrapper.vm.$nextTick();
     await idopontStore.removeUnreserved();
 
     expect(idopontStore.idopontok).not.toContain({
-      id: 1111,
+      id: "1111",
       day: "Kedd",
       hour: 14,
       name: "",

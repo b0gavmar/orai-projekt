@@ -39,7 +39,7 @@ export const useIdopontStore = defineStore("idopont", () => {
   const putIdopont = async (idopont) => {
     try {
       fetchIdopontok();
-      await axios.post(
+      await axios.put(
         `http://localhost:3000/idopontok/${idopont.id}`,
         idopont
       );
